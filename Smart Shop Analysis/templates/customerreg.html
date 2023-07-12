@@ -1,0 +1,356 @@
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="">
+  <script src="https://kit.fontawesome.com/2f4812b960.js" crossorigin="anonymous"></script>
+  <title> customer register</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
+
+    * {
+      font-family: "poppins", sans-serif;
+
+    }
+
+    .head {
+      position: fixed;
+    }
+
+    .nav-ul a {
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .nav-ul {
+      display: flex;
+      padding-left: 180px;
+      cursor: pointer;
+    }
+
+    .ul-list {
+      list-style: none;
+      padding-left: 60px;
+    }
+
+    .nav-name {
+      color: #fff;
+      font-size: 24px;
+      margin-left: -20px;
+    }
+
+    .navbar {
+      display: flex;
+      padding-left: 150px;
+      font-size: 21px;
+    }
+
+    button {
+      margin-left: 80px;
+      margin-top: 10px;
+    }
+
+    .btn1 {
+
+      border: 2px solid #fff;
+      background: transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      height: 40px;
+      width: 60px;
+    }
+
+    .btn2 {
+
+      border: 2px solid #fff;
+      background: transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      height: 40px;
+      width: 70px;
+    }
+
+    button a {
+      text-decoration: none;
+      color: #fff;
+      background: transparent;
+
+    }
+
+    form {
+      margin-left: 450px;
+      position: absolute;
+      margin-top: 130px;
+
+    }
+
+    .login {
+
+      margin-left: 80px;
+      margin-right: 20px;
+      font-size: 30px;
+      font-weight: bolder;
+      margin-top: 10px;
+    }
+
+    form::-webkit-scrollbar {
+      display: none;
+    }
+
+    .form1 {
+      width: 400px;
+      height: 490px;
+      background-color: white;
+      border-radius: 15px;
+      box-shadow: 10px 10px 20px rgba(61, 57, 57, 0.555);
+      overflow: auto;
+    }
+
+    body {
+      background: rgba(57, 57, 57, 0.8) url({% static 'pexels-jess-bailey-designs-788946.jpg' %});
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-blend-mode: darken;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .inputf {
+
+      max-width: 380px;
+      width: 88%;
+      background-color: #f0f0f0;
+      margin: 10px 0;
+      height: 50px;
+      border-radius: 55px;
+      display: grid;
+      grid-template-columns: 15% 85%;
+      margin-top: -30px;
+      margin-left: 20px;
+
+    }
+
+    .check1 {
+      margin-left: 46px;
+      position: absolute;
+      margin-top: 10px;
+    }
+
+    .hide {
+      position: absolute;
+      margin-top: 12px;
+      margin-left: 30px;
+    }
+
+    .sub {
+      border-radius: 330px;
+      width: 150px;
+      height: 45px;
+      margin-left: 110px;
+      background-image: linear-gradient(to right, #8e2de2, #4a00e0);
+      border: none;
+      color: white;
+      font-size: medium;
+      font-weight: bolder;
+      margin-top: -10px;
+      cursor: pointer;
+    }
+
+    .check {
+      margin-left: 40px;
+      position: absolute;
+      margin-top: -10px;
+    }
+
+    .b {
+      position: absolute;
+      margin-top: -10px;
+      margin-left: 20px;
+    }
+
+    .spa {
+      margin-left: 230px;
+      margin-top: -25px;
+      position: absolute;
+
+    }
+
+    .spa1 {
+      position: absolute;
+      margin-left: 50px;
+      margin-top: -20px;
+    }
+
+
+    input:focus,
+    select:focus,
+    textarea:focus,
+    button:focus {
+      outline: none;
+    }
+
+    .inputf i {
+      text-align: center;
+      line-height: 55px;
+      color: #acacac;
+      font-size: 18px;
+    }
+
+    .inputf input {
+      background: none;
+      outline: none;
+      border: none;
+      line-height: 3;
+      font-weight: 600;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .inputf input::placeholder {
+      color: #aaa;
+      font-weight: 500;
+    }
+
+    .fa-xmark {
+      position: absolute;
+      color: red;
+      font-size: 25px;
+      margin-left: 370px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+  </style>
+
+</head>
+
+<body>
+  <header class="head">
+    <nav class="navbar">
+      <p class="nav-name">Smart Shop Analysis</p>
+      <ul class="nav-ul">
+        <li class="ul-list"><a href="/home">Home</a></li>
+        <li class="ul-list"><a href="/about">About</a></li>
+        <li class="ul-list"><a href="services">Service</a></li>
+        <li class="ul-list"><a href="/complaint">Contact</a></li>
+      </ul>
+      <button class="btn1"><a href="/login">Login</a></button>
+      <button class="btn2"><a href="/vendorregister">Vendor Register</a></button>
+    </nav>
+  </header>
+
+  {% for m in messages %}
+  <div class="alert alert-danger" role="alert">
+    {{m}}
+  </div>
+  {% endfor %}
+
+  <div class="box">
+    <form action="" class="form1" id="form1" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <i class="fa-solid fa-xmark" id="xmark"></i>
+      <p class="login">Customer Register</p>
+      <br>
+      <div class="inputf">
+        <i class="fa fa-user"></i>
+        <input type="text" value="" placeholder=" Customer name" name="name" required>
+      </div>
+      <br>
+      <br>
+      <div class="inputf">
+        <i class="fa-solid fa-phone"></i>
+        <input type="tel" placeholder="Phone no" name="phoneno" required pattern="[0-9]{10}">
+      </div>
+      <br>
+      <br>
+      <div class="inputf">
+        <i class="fa-solid fa-envelope"></i>
+        <input type="email" name="gmail" placeholder="Email" required>
+      </div>
+      <br>
+      <br>
+      <div class="inputf">
+        <i class="fa-solid fa-person"></i>
+        <input type="text" name="username" placeholder="Username" pattern="[a-zA-Z0-9-_]{3,20}" required>
+      </div>
+      <br>
+      <br>
+      <div class="inputf pass">
+        <i class="fa-solid fa-lock"></i>
+        <div>
+          <input type="password" id="pass" value="" placeholder="Password" required name="pass1"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            title="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:"><i
+            class="fa-solid fa-eye-slash" onclick="show()"></i>
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <div class="inputf pass">
+        <i class="fa-solid fa-lock"></i>
+        <div>
+          <input type="password" id="pass1" value="" placeholder="Password" required name="pass2"
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            title="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:"><i
+            class="fa-solid fa-eye-slash" onclick="show1()"></i>
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+      <div class="inputf">
+        <i class="fa-solid fa-camera"></i>
+        <input type="file" name="profile" required>
+      </div>
+
+      <br>
+      <input class="sub" type="submit" value="Submit">
+      <br>
+      <br>
+
+      <input type="checkbox" class="b">
+      <label class="check" for="check">Remember me</label>
+      <br>
+      <span class="spa"><a href="forgot.html" style="text-decoration: none;color: black;">Forgot password?
+        </a></span>
+      <br>
+      <span class="spa1">Already have an account? <a href="/login" style="text-decoration: none;color: black;">Login
+          here</a> </span>
+    </form>
+
+  </div>
+  <script>
+
+
+    function show() {
+      a = document.getElementById("pass")
+      if (a.type == "password") {
+        a.type = "text";
+      }
+      else {
+        a.type = "password";
+      }
+    }
+
+    function show1() {
+      a = document.getElementById("pass1")
+      if (a.type == "password") {
+        a.type = "text";
+      }
+      else {
+        a.type = "password";
+      }
+    }
+    var x = document.getElementById("xmark");
+    var fom = document.getElementById("form1");
+    x.addEventListener("click", myfun);
+    function myfun() {
+      fom.style.visibility = "hidden";
+    }
+  </script>
+</body>
+
+</html>

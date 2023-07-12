@@ -1,0 +1,122 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        margin-top: -400px;
+        margin-left: 200px;
+    }
+    .image img{
+        border-radius: 50%;
+        height: 300px;
+        width: 300px;
+        margin-top: 130px;
+        margin-left: 200px;
+    }
+    form{
+        margin-left: 700px;
+        margin-top: 0px;
+        
+    
+    }
+    .inputf{
+        margin-left: 150px;
+        margin-top: 40px;
+        outline: none;
+        width: 240px;
+        height: 34px;
+        border-radius: 360px;
+        background-color: #aaaaaa46;
+        border: none;
+        padding-left: 20px;
+        
+    }
+    label{
+        font-size: 20px;
+    }
+    #c-no{
+        margin-left: 110px;
+    }
+    #s-add{
+        margin-left: 135px;
+    }
+    #v-name{
+        margin-left: 135px;
+    }
+    .btn{
+        width: 150px;
+        height: 40px;
+        margin-left: -230px;
+        margin-top: 480px;
+        position: absolute;
+        border-radius: 30px;
+        border: none;
+        background-color:rgba(255, 0, 0, 0.737);
+        color: white;
+        font-size: 20px;
+    }
+</style>
+<body>
+    <div class="profile">
+        <div class="image">
+            <form action="" method="POST" enctype="multipart/form-data">
+            <img src="" alt="">
+            {% comment %} <button type="submit" class="btn">Submit</button> {% endcomment %}
+        </div>
+        <div class="form">
+            {% if request.user.is_vendor %}
+            
+                {% csrf_token %}
+                <label for="s-name">Shop name</label>
+                <input type="text" class="inputf" name="s-name" id="s-name" value="{{ request.user.name }}">
+                <br>
+                <label for="c-no">Contact number</label>
+               <input type="tel" class="inputf" name="c-no" id="c-no" value="{{ request.user.phoneno  }}">
+                <br>
+                <label for="s-add">Shop address</label>
+               <input type="text" name="s-add" id="s-add" class="inputf" value="{{ request.user.address }}">
+                <br>
+                <label for="s-add">Gmail</label>
+                <input type="text" name="gmail" id="s-add" class="inputf" value="{{ request.user.email }}">
+                 <br>
+                <label for="s-profile">profile image</label>
+               <input type="file" name="s-profile" id="s-profile" class="inputf">
+                <br>
+                
+                <input type="submit" value="submit">
+
+                {% for m in messages %}
+                <div class="alert alert-danger" role="alert" >
+                    {{m}}
+                </div>
+                {% endfor %}
+            
+            </form>
+            {% elif request.user.is_customer %}
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="s-name">Name</label>
+                <input type="text" class="inputf" name="s-name" id="s-name" value="{{ request.user.name }}">
+                <br>
+                <label for="c-no">Contact number</label>
+               <input type="tel" class="inputf" name="c-no" id="c-no" value="{{ request.user.phoneno  }}>
+                <br>
+                <label for="s-add">address</label>
+               <input type="text" name="s-add" id="s-add" class="v-name" value="{{ request.user.address }}>
+                <br>
+                <label for="s-profile">profile image</label>
+               <input type="file" name="s-profile" id="s-profile" class="inputf">
+                <br>
+                
+                <input type="submit" value="submit">
+            
+            </form>
+
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Edit Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #f1f1f1;
+            overflow: hidden;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: #333;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+        }
+
+        .navbar a.active {
+            background-color: #555;
+            color: white;
+        }
+
+        .container {
+            padding: 20px;
+        }
+    </style>
+    <style>
+        .image img {
+            border-radius: 50%;
+            height: 300px;
+            width: 300px;
+            margin-top: 50px;
+            margin-left: 100px;
+        }
+
+        form {
+            margin-left: 500px;
+            margin-top: -250px;
+
+
+        }
+
+        .inputf {
+            margin-left: 150px;
+            margin-top: 40px;
+            outline: none;
+            width: 240px;
+            height: 34px;
+            border-radius: 360px;
+            padding-left: 20px;
+
+        }
+
+        label {
+            font-size: 20px;
+        }
+
+        #c-no {
+            margin-left: 110px;
+
+        }
+
+        #s-add {
+            margin-left: 135px;
+        }
+
+        #v-name {
+            margin-left: 135px;
+        }
+        {% comment %} #gmail{
+            margin=left:135px;
+        } {% endcomment %}
+
+        .btn {
+            width: 150px;
+            height: 40px;
+            margin-left: -230px;
+            margin-top: 400px;
+            position: absolute;
+            border-radius: 30px;
+            border: none;
+            background-color: rgba(255, 0, 0, 0.737);
+            color: white;
+            font-size: 20px;
+        }
+
+        .header {
+            margin-top: -400px;
+            margin-left: 200px;
+        }
+
+        #p-name {
+            margin-top: 50px;
+        }
+
+        .profile1 {
+            margin-left: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="/vendordash" class="active">{{request.user.name}}</a>
+        <a href="vendordash">DashBoard</a>
+        <a href="addproduct">Add Product</a>
+        <a href="viewproduct">View Product</a>
+        <a href="generatebill">Bill Generate</a>
+        <a href="add_special_product">Add Special offers</a>
+        <a href="booked_products">Booked Product</a>
+        <a href="v_special_offer">My Special Offers</a>
+        <a href="login" class="active">Logout</a>
+    </div>
+    <div class="container">
+        {% if request.user %}
+            <div class="profile">
+                <div class="image">
+                    {% if request.user.profile %} 
+                    <a href="display_profile">
+                        <img src="{{ request.user.profile.url }}" alt="" class="user">
+                    </a>
+                    {% else %}
+                    <a href="display_profile">
+                        <img src="/static/user.jpg" alt="" class="user">
+                    </a>
+                    {% endif %}
+                    <button class="btn"><a href="{% url 'profile' %}" style="text-decoration:none">Edit</a></button>
+                </div>
+                <div class="form">
+                    <form action="">
+                        <label for="s-name">Name</label>
+                        <label class="inputf" name="s-name" id="s-name">{{ request.user.name }}</label>
+                        <br>
+                        <br>
+                        <label for="c-no">Contact number</label>
+                        <label class="inputf" name="c-no" id="c-no">{{ request.user.phoneno }}</label>
+                        <br>
+                        <br>
+                        <label for="s-name">Gmail</label>
+                        <label class="inputf" name="gmail" id="s-name">{{ request.user.email }}</label>
+                        <br>
+                        <br>
+                        <label for="s-add">Address</label>
+                        <label class="inputf" id="s-add" class="inputf">{{ request.user.address }}</label>
+                        <br>
+                    </form>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

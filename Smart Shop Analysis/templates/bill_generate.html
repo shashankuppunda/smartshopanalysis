@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Bill | {{request.user.name}}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: grid;
+        }
+
+        .navbar {
+            background-color: #f1f1f1;
+            overflow: hidden;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: #333;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            background-color: #ddd;
+        }
+
+        .navbar a.active {
+            background-color: #555;
+            color: white;
+        }
+
+        .container {
+            padding: 20px;
+        }
+    </style>
+    <style>
+        * {
+            margin: 0;
+            padding: 10;
+            font-family: sans-serif;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f7f6f6;
+            min-height: 100vh;
+        }
+
+        header {
+            position: fixed;
+            display: flex;
+            top: 0;
+            right: 0;
+            justify-content: space-between;
+            width: 100%;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            background-color: rgb(255, 255, 255);
+        }
+
+        .logo {
+            height: 60px;
+            line-height: 60px;
+            color: #12334e;
+            font-size: 1em;
+            text-decoration: none;
+            cursor: pointer;
+            padding-left: 20px;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        #toggle {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background-color: #9051ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #toggle::before {
+            content: "";
+            position: absolute;
+            width: 28px;
+            height: 2px;
+            background: #fff;
+            transform: translateY(-5px);
+            transition: 0.2s;
+        }
+
+        #toggle::after {
+            content: "";
+            position: absolute;
+            width: 40px;
+            height: 2px;
+            background: #fff;
+            transform: translateY(5px);
+            transition: 0.2s;
+        }
+
+        #toggle.active::before {
+            transform: translateY(0) rotate(45deg);
+        }
+
+        #toggle.active::after {
+            transform: translateY(0) rotate(-45deg);
+        }
+
+        #toggle.active {
+            background: #f7226a;
+        }
+
+        #navbar {
+            position: relative;
+            height: 60px;
+            right: 60px;
+            background: #fff;
+            transition: 0.5s;
+            width: 0;
+            overflow: hidden;
+        }
+
+        #navbar.active {
+            width: 750px;
+        }
+
+        #navbar ul {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+        }
+
+        #navbar ul li {
+            list-style: none;
+        }
+
+        #navbar ul li a {
+            color: #12334e;
+            height: 60px;
+            line-height: 60px;
+            display: flex;
+            text-decoration: none;
+            font-size: 13px;
+            padding: 0 15px;
+            letter-spacing: 1px;
+        }
+
+        #navbar ul li a:hover {
+            color: #fff;
+            background: #9051ff;
+        }
+
+        /* section{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    min-height: 100vh;
+    color: #f5f5f5;
+    font-size: 1.2em;
+    font-weight: 700;
+    } */
+        /* /////////// make it responsive ///////////  */
+        .home-sec {
+            margin-top: 0px;
+            z-index: 3;
+        }
+
+        @media (max-width:990px) {
+            #navbar {
+                position: fixed;
+                bottom: -100%;
+                right: 0;
+                width: 100%;
+                transition: 0.5s;
+                display: block;
+                justify-content: center;
+                align-items: center;
+            }
+
+            #navbar.active {
+                height: calc(100vh - 60px);
+                bottom: 0;
+                width: 100%;
+            }
+
+            #navbar ul {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        body {
+            width: 100%;
+        }
+
+        #new {
+            background-color: white;
+            color: orangered;
+            font-size: 20px;
+            font-weight: 600;
+            border: 2px groove orangered;
+            margin-top: 3%;
+            margin-left: 3%;
+            width: 200px;
+            height: 40px;
+            text-align: center;
+        }
+
+        #new:hover {
+            background-color: orangered;
+            color: white;
+
+        }
+
+        .billContainer {
+            width: 80%;
+            margin-left: 10%;
+            margin-top: 2%;
+            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.76);
+        }
+
+        .inputs {
+            width: 50%;
+            margin-left: 25%;
+            height: 500px;
+            margin-top: 2%;
+            box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.76);
+        }
+
+        .labelContainer {
+
+            width: 40%;
+            float: left;
+            margin-top: 1%;
+            height: 90px;
+            margin-left: 170px;
+        }
+
+        .labelContainer>label {
+            font-size: 15px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-weight: 700;
+        }
+
+        .labelContainer>input {
+            width: 120%;
+            margin-top: 2%;
+            height: 35px;
+            border: 2px groove #33287c;
+            font-size: 16px;
+        }
+
+        .proceed {
+            background-color: white;
+            color: #33287c;
+            font-size: 20px;
+            font-weight: 600;
+            border: 2px groove #33287c;
+            margin-top: 2%;
+            margin-left: 37%;
+            width: 200px;
+            height: 40px;
+            text-align: center;
+        }
+
+        .proceed:hover {
+            background-color: #33287c;
+            color: white;
+        }
+
+        .subcontainer {
+            width: 98%;
+            margin: 1%;
+            border: 2px solid #33287c;
+            height: 950px;
+        }
+
+        #company {
+            margin-left: 300px;
+            color: #33287c;
+            font-size: 20px;
+        }
+
+        .location {
+            position: relative;
+            margin-left: 45%;
+            color: #33287c;
+            top: 121px;
+            font-size: 20px;
+            font-weight: 1000;
+
+        }
+
+        .details {
+            width: 98%;
+            margin: 0%;
+            border: 2px solid #33287c;
+            height: 300px;
+        }
+
+        #invoiceHolder {
+            margin-top: 2%;
+            float: right;
+            margin-right: -7%;
+            width: 250px;
+            height: 40px;
+        }
+
+        #invoiceLabel {
+            font-size: 20px;
+            font-weight: 1000;
+            color: #33287c;
+        }
+
+        #invoice {
+            font-size: 25px;
+            font-weight: 600;
+            color: rgb(243, 7, 7);
+            margin-left: 2%;
+        }
+
+        .entries {
+            width: 97%;
+            height: 30px;
+            margin-left: 1%;
+            margin-top: 0.5%;
+            font-weight: 70px;
+        }
+
+        .namelabel {
+            font-size: 20px;
+            color: #33287c;
+            font-weight: 1000;
+
+
+        }
+
+        .enteredValues {
+            font-size: 20px;
+            color: #fa0909;
+            font-weight: 1000;
+        }
+
+        .bill {
+            width: 95%;
+            margin: 2.5%;
+            border: 2px solid #33287c;
+            height: 225px;
+        }
+
+        .productdiv {
+            width: 75%;
+            height: 220px;
+            border: none;
+            border-right: 2px groove #33287c;
+            float: left;
+        }
+
+        #producttitle {
+            width: 100%;
+            height: 35px;
+            border: none;
+            border-bottom: 2px groove #33287c;
+            font-size: 25px;
+            font-weight: 800;
+            text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            color: #33287c;
+        }
+
+        #qtytitle {
+            width: 100%;
+            height: 35px;
+            border: none;
+            border-bottom: 2px groove #33287c;
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            color: #33287c;
+        }
+
+        #amounttitle {
+            width: 100%;
+            height: 35px;
+            border: none;
+            border-bottom: 2px groove #33287c;
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            color: #33287c;
+        }
+
+        .totaldiv {
+            width: 95%;
+            margin-left: 2.5%;
+            margin-top: -2.5%;
+            border: 2px solid #33287c;
+            height: 65px;
+        }
+
+        .footer {
+            font-size: 22px;
+            font-weight: 600;
+            color: #33287c;
+            float: left;
+            margin-left: 5%;
+        }
+
+        .totalPrice {
+            font-size: 26px;
+            font-weight: 600;
+            color: #e60707;
+            float: right;
+            margin-right: 9%;
+        }
+
+        .print {
+            background-color: orangered;
+            color: white;
+            font-size: 22px;
+            font-weight: 600;
+            border: 2px groove rgb(0, 221, 255);
+            margin-top: 2%;
+            margin-left: 45%;
+            width: 220px;
+            height: 45px;
+            text-align: center;
+        }
+
+        #footernote1 {
+            margin-top: 10%;
+            color: #33287c;
+            font-size: 20px;
+            font-weight: 1000;
+        }
+
+        #footernote2 {
+            color: #33287c;
+            font-size: 20px;
+            font-weight: 1000;
+            margin-left: 350px;
+
+        }
+
+        .location1 {
+            margin-top: 70px;
+            font-size: 20px;
+            color: #33287c;
+            font-weight: 400;
+        }
+
+        .location2 {
+            margin-left: 300px;
+        }
+
+
+
+        @media only screen and (max-width: 750px) {
+            body {
+                background-color: rgb(105, 233, 88);
+            }
+
+            .labelContainer>label {
+                font-size: 12px;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-weight: 400;
+            }
+
+            .proceed {
+                margin-left: 22%;
+            }
+
+            .location {
+                margin-left: 15%;
+            }
+
+            #invoiceLabel {
+                font-size: 15px;
+            }
+
+            #invoice {
+                font-size: 20px;
+            }
+
+            .namelabel {
+                font-size: 10px;
+                color: #33287c;
+                font-weight: 500;
+            }
+
+            .details {
+                width: 97%;
+                height: 250px;
+            }
+
+            .enteredValues {
+                font-size: 14px;
+            }
+
+            #producttitle {
+                font-size: 14px;
+
+            }
+
+            .productdiv {
+                width: 65%;
+            }
+
+            #amounttitle {
+                font-size: 11px;
+            }
+
+            #footernote1 {
+                margin-top: 12%;
+                color: #33287c;
+            }
+
+            .entries {
+                width: 97%;
+            }
+
+            #company {
+                margin-left: 200px;
+
+            }
+        }
+
+        @media only screen and (max-width: 700px) {
+            body {
+                background-color: hsl(41, 77%, 63%);
+            }
+
+            .labelContainer>label {
+                font-size: 12px;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-weight: 400;
+            }
+
+            .proceed {
+                margin-left: 22%;
+            }
+
+            .location {
+                margin-left: 15%;
+            }
+
+            #invoiceLabel {
+                font-size: 15px;
+            }
+
+            #invoice {
+                font-size: 20px;
+            }
+
+            .namelabel {
+                font-size: 10px;
+                color: #33287c;
+                font-weight: 500;
+            }
+
+            .details {
+                width: 97%;
+                height: 250px;
+            }
+
+            .enteredValues {
+                font-size: 14px;
+            }
+
+            #producttitle {
+                font-size: 14px;
+
+            }
+
+            .productdiv {
+                width: 65%;
+            }
+
+            #amounttitle {
+                font-size: 12px;
+            }
+
+            #footernote1 {
+                margin-top: 12%;
+                color: #33287c;
+            }
+
+            .entries {
+                width: 97%;
+            }
+
+            #company {
+                margin-left: 200px;
+
+            }
+
+        }
+
+
+        @media only screen and (max-width: 655px) {
+            body {
+                background-color: #569be9;
+            }
+
+            .labelContainer>label {
+                font-size: 12px;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                font-weight: 400;
+            }
+
+            .proceed {
+                margin-left: 22%;
+            }
+
+            .location {
+                margin-left: 15%;
+            }
+
+            #invoiceLabel {
+                font-size: 15px;
+            }
+
+            #invoice {
+                font-size: 20px;
+            }
+
+            .namelabel {
+                font-size: 10px;
+                color: #33287c;
+                font-weight: 500;
+            }
+
+            .details {
+                width: 97%;
+                height: 250px;
+            }
+
+            .enteredValues {
+                font-size: 14px;
+            }
+
+            #producttitle {
+                font-size: 14px;
+
+            }
+
+            .productdiv {
+                width: 65%;
+            }
+
+            #amounttitle {
+                font-size: 12px;
+            }
+
+            #footernote1 {
+                margin-top: 12%;
+                color: #33287c;
+            }
+
+            .entries {
+                width: 97%;
+            }
+
+            #company {
+                margin-left: 200px;
+
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <a href="/vendordash" class="active">{{request.user.name}}</a>
+        <a href="vendordash">DashBoard</a>
+        <a href="addproduct">Add Product</a>
+        <a href="viewproduct">View Product</a>
+        <a href="generatebill">Bill Generate</a>
+        <a href="add_special_product">Add Special offers</a>
+        <a href="booked_products">Booked Product</a>
+        <a href="v_special_offer">My Special Offers</a>
+        <a href="login" class="active">Logout</a>
+    </div>
+    <div class="container">
+        <script>
+            function printing() {
+                document.getElementsByClassName('inputs')[0].style.display = 'none';
+                document.getElementsByClassName('print')[0].style.display = 'none';
+                console.log("vig")
+            }
+        </script>
+        <script>
+            function printDiv(divId) {
+                var printContent = document.getElementById(divId).innerHTML;
+                var originalContent = document.body.innerHTML;
+
+                document.body.innerHTML = printContent;
+                window.print();
+
+                document.body.innerHTML = originalContent;
+            }
+        </script>
+        <section id="home" class="home">
+            <div class="home-sec">
+                <h1 align="center">Bill Generate</h1>
+
+                <div class="inputs">
+                    <form action="" method='post'>
+                        {% csrf_token %}
+                        <div class="labelContainer">
+                            <label for="name">Customer's name:</label>
+                            <input id="name" name="name" type="text" placeholder="Enter Customer&#39;s Name"
+                                required="">
+                        </div>
+                        <div class="labelContainer">
+                            <label for="product">Product Name:</label>
+                            <input id="product" name="product" type="text" placeholder="Enter Product Name" required="">
+                        </div>
+                        <div class="labelContainer">
+                            <label for="mobNumber">Customer Mobile:</label>
+                            <input id="mobNumber" name="mobNumber" type="text"
+                                placeholder="Enter Customer&#39;s Mobile No." required pattern="[0-9]{10}">
+                        </div>
+                        <div class="labelContainer">
+                            <label for="discount">Discount:</label>
+                            <input id="discount" name="discount" type="text" placeholder="Enter Discount" required="">
+                        </div>
+                        <div class="labelContainer">
+                            <input type="submit" value="Proceed">
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="billContainer">
+                    {% if product %}
+                    <div id="printingBill" class="subcontainer">
+                        <span style="margin-left: 45%;" class="location">Invoice Bill</span><br>
+                        <span style="float: right;margin-right: 3%;"
+                            class="location1">{{product.uploaded_by.phoneno}}</span>
+                        <h3 id="company">{{product.uploaded_by.name}}</h3><br>
+                        <span class="location2">{{product.uploaded_by.address}}</span><br><br><br>
+                        <div class="details">
+                            <div id="invoiceHolder">
+                                <span id="invoiceLabel">INVOICE NO:</span>
+                                <span id="invoice">1</span>
+                            </div>
+                            <div style="margin-top: 9%;"></div>
+                            <div class="entries">
+                                <div style=" width: 35%; height: 25px;margin-left: 2%; float: left;">
+                                    <span class="namelabel">
+                                        <pre>Customer's Name          :</pre>
+                                    </span>
+                                </div>
+                                <div style=" width: 60%; height: 25px;margin-left: 3%; float: left;">
+                                    <span class="enteredValues" id="cusname">{{name}}</span>
+                                </div>
+                            </div>
+
+                            <div class="entries">
+                                <div style=" width: 35%; height: 25px;margin-left: 2%; float: left;">
+                                    <span class="namelabel">
+                                        <pre>Customer Mobile           :</pre>
+                                    </span>
+                                </div>
+                                <div style=" width: 60%; height: 25px;margin-left: 3%; float: left;">
+                                    <span class="enteredValues" id="contact">{{mobnum}}</span>
+                                </div>
+                            </div>
+                            <div class="entries">
+                                <div style=" width: 35%; height: 25px;margin-left: 2%; float: left;">
+                                    <span class="namelabel">
+                                        <pre>Date                               :</pre>
+                                    </span>
+                                </div>
+                                <div style=" width: 60%; height: 25px;margin-left: 3%; float: left;">
+                                    <span class="enteredValues" id="buydate">{{date}}</span>
+                                </div>
+                            </div>
+                            <div class="entries">
+                                <div style=" width: 35%; height: 25px;margin-left: 2%; float: left;">
+                                    <span class="namelabel">
+                                        <pre>IMEI                               :</pre>
+                                    </span>
+                                </div>
+                                <div style=" width: 60%; height: 25px;margin-left: 3%; float: left;">
+                                    <span class="enteredValues" id="imeiDisplay">{{product.cerial_number}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bill">
+                            <div class="productdiv">
+                                <div id="producttitle">
+                                    Product Name
+                                </div>
+                                <div style="text-align: center; color: #33287c;">
+                                    <h3 id="item"></h3>
+                                    <h4 style="font-size: 20px; font-weight: 1000;">{{product.product_name}}</h4><br>
+                                    <h4 id="cgst">CGST(%)</h4><br>
+                                    <h4 id="sgst">SGST(%)</h4><br>
+                                    <h4 id="discount">discount</h4><br>
+                                    <h4>Offer discount</h4>
+                                </div>
+                            </div>
+
+                            <div class="amountdiv">
+                                <div id="amounttitle">Amount</div>
+                                <div style="text-align: center; color: #33287c;">
+                                    <h3 id="price">{{ amount }} </h3><br>
+                                    <h4 id="cgstcalc">{{ gst }}</h4><br>
+                                    <h4 id="sgstcalc">{{ gst }}</h4><br>
+                                    <h4 id="discount">{{ discount }}</h4><br>
+                                    <h4>{{offer_amount}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="totaldiv" style="border-top: none;">
+                            <span class="footer">Total Amount</span>
+                            <span id="gT" class="totalPrice">{{total}}</span>
+                        </div>
+                        <div style="height: 48px" class="entries">
+
+                            <h5 align="center" id="footernote1">Thank you</h5>
+                            <span id="footernote2"><i><strong>Visit Again</strong></i></span>
+                        </div>
+                    </div>
+
+                </div>
+                <button class="print" onclick="printing();printDiv('printingBill')">GENERATE BILL</button>
+            </div>
+            {% endif %}
+        </section>
+        <script>
+            const toggle = document.getElementById("toggle");
+            const navbar = document.getElementById("navbar");
+            const header = document.getElementById("header")
+            document.onclick = function (e) {
+                if (e.target.id !== "header" && e.target.id !== "toggle" && e.target.id !== "navbar") {
+                    toggle.classList.remove("active");
+                    navbar.classList.remove("active");
+                }
+            }
+            toggle.onclick = function () {
+                toggle.classList.toggle("active");
+                navbar.classList.toggle("active");
+            }
+        </script>
+    </div>
+</body>
+
+</html>

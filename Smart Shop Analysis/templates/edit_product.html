@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit Product</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar {
+      background-color: #f1f1f1;
+      overflow: hidden;
+    }
+    .navbar a {
+      float: left;
+      display: block;
+      color: #333;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .navbar a:hover {
+      background-color: #ddd;
+    }
+    .navbar a.active {
+      background-color: #555;
+      color: white;
+    }
+    .container {
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/vendordash" class="active">{{request.user.name}}</a>
+        <a href="vendordash">DashBoard</a>
+        <a href="addproduct">Add Product</a>
+        <a href="viewproduct">View Product</a>
+        <a href="generatebill">Bill Generate</a>
+        <a href="add_special_product">Add Special offers</a>
+        <a href="booked_products">Booked Product</a>
+        <a href="v_special_offer">My Special Offers</a>
+        <a href="login" class="active">Logout</a>
+    </div>
+  <div class="container">
+    {% for m in messages %}
+    <div class="alert alert-danger" role="alert" >
+        {{m}}
+    </div>
+    {% endfor %}
+    <div class="home-sec">
+        <head>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                }
+
+                h1 {
+                    text-align: center;
+                }
+
+                form {
+                    max-width: 400px;
+                    margin: 0 auto;
+                }
+
+                label {
+                    display: block;
+                    margin-bottom: 5px;
+                }
+
+                input[type="text"] {
+                    width: 100%;
+                    padding: 8px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                    box-sizing: border-box;
+                    margin-bottom: 10px;
+                }
+
+                input[type="submit"] {
+                    background-color: #4CAF50;
+                    color: white;
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 16px;
+                }
+
+                input[type="submit"]:hover {
+                    background-color: #45a049;
+                }
+            </style>
+        </head>
+
+        <body>
+            <h1>Edit your product</h1>
+
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="product_name">Product Name:</label>
+                <input type="text" id="product_name" name="product_name" required value="{{ ob1.product_name }}">
+
+                <label for="serial_number">IMEI Number:</label>
+                <input type="text" id="serial_number" name="serial_number" required value="{{ ob1.cerial_number }}">
+
+                <label for="mrp">MRP:</label>
+                <input type="text" id="mrp" name="mrp" required value="{{ ob1.mrp }}">
+
+                <label for="mop">Descprition :</label>
+                <input type="text" id="desc" name="desc" required value="{{ ob1.desc }}">
+
+                <label for="mop">Product Image:</label>
+                <input type="file" id="image" name="image" required>
+
+                <input type="submit" value="Submit">
+            </form>
+        </body>
+    </div>
+  </div>
+</body>
+</html>

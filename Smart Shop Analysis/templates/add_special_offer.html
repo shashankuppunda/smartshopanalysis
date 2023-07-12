@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Customer Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: grid;
+    }
+    .navbar {
+      background-color: #f1f1f1;
+      overflow: hidden;
+    }
+    .navbar a {
+      float: left;
+      display: block;
+      color: #333;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .navbar a:hover {
+      background-color: #ddd;
+    }
+    .navbar a.active {
+      background-color: #555;
+      color: white;
+    }
+    .container {
+      padding: 20px;
+    }
+  </style>
+  <style>
+    .alert {
+      padding: 10px;
+      margin-left: 270px;
+      margin-right:770px;
+      margin-top:30px;
+      margin-bottom: 0px;
+      border: 1px solid transparent;
+      border-radius: 5px;
+    }
+    
+    .alert-danger {
+      color: #721c24;
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+    }
+    
+    .lbael{
+        font-size: 20px;
+       
+    }
+    .form{
+        margin-left: 400px;
+        margin-top: 0px;
+    }
+    .inputf{
+        margin-left: 50px;
+        margin-top: 40px;
+        outline: none;
+        width: 240px;
+        height: 34px;
+        border-radius: 360px;
+        background-color: #aaaaaa46;
+        border: none;
+        padding-left: 20px;
+        
+    }
+    .hello{
+        font-size: 20px;
+        font-weight: 600;
+    }
+    .btn{
+        width: 150px;
+        height: 40px;
+        margin-left: 200px;
+        margin-top: 60px;
+        position: absolute;
+        border-radius: 30px;
+        border: none;
+        background-color:rgba(255, 0, 0, 0.737);
+        color: white;
+        font-size: 20px;
+    }
+    .header{
+        margin-top: 10px;
+        margin-left: 450px;
+        font-weight: 800;
+        color: rgb(7, 6, 6);
+    }
+    
+   
+</style>
+</head>
+<body>
+  <div class="navbar">
+    <a href="/vendordash" class="active">{{request.user.name}}</a>
+    <a href="vendordash">DashBoard</a>
+    <a href="addproduct">Add Product</a>
+    <a href="viewproduct">View Product</a>
+    <a href="generatebill">Bill Generate</a>
+    <a href="add_special_product">Add Special offers</a>
+    <a href="booked_products">Booked Product</a>
+    <a href="v_special_offer">My Special Offers</a>
+    <a href="login" class="active">Logout</a>
+</div>
+{% for m in messages %}
+<div class="alert alert-danger" role="alert" >
+    {{m}}
+</div>
+{% endfor %}
+  <div class="container">
+    <div class="header">
+        <h1><u>Adding Special Offers</u></h1>
+    </div>
+    <div class="form">
+        <form action="" method="POST">
+            {% csrf_token %}
+            <label for="offername" class="hello">Product Name:</label>
+            <input type="text" class="inputf" name="product">
+            <br>
+            <label for="offername" class="hello">Offer Name:</label>
+            <input type="text" class="inputf" name="offer_name" >
+            <br>
+            <label for="offerprice" class="hello">Offer  Price:</label>
+            <input type="text" class="inputf" name="price" >
+            <br>
+            <button class="btn">
+                Submit
+            </button>
+        </form>
+        
+    </div>
+  </div>
+</body>
+</html>
